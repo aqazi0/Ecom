@@ -1,0 +1,26 @@
+{% extends 'shop/basic.html' %}
+{% block title %}{{prods.0.0.sub_category}}{% endblock %}
+{% block body %}
+<div class="container my-4">
+
+{% for product, nitem in prods %}
+<div class="row">
+<h1>{{product.0.sub_category}}</h1>
+{% for prod in product %}
+    <div class="col-md-3">
+      <div class="shop-item">
+        <span class="shop-item-title">{{prod.product_name}}</span>
+        <a href="/shop/prodview{{prod.id}}">
+        <img class="shop-item-image" src="/media/{{prod.image}}">
+      </a>
+        <div class="shop-item-details">
+            <span class="shop-item-price">₹{{prod.price}}</span>
+            <button class="btn btn-primary shop-item-button"type="button">ADD TO CART</button>
+        </div>
+    </div>
+    </div>
+  {% endfor %}
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

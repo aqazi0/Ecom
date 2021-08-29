@@ -1,0 +1,76 @@
+/* body{
+    background-color:rgb(237, 176, 245);
+    background-image: url(v.JPG);
+    range: auto;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+body{
+    padding-left: 20px;
+    background-color:rgb(241, 217, 241);
+}
+.vl {
+    border-left: 2px solid rgb(168, 10, 134);
+    height: 84%;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 65px;
+  }
+  .d{
+      padding: 15px;
+      color:rgb(241, 217, 241);
+  }
+  img{
+      padding: 40px;
+      padding-left: 125px;
+  }
+  #head{
+    
+        color: rgb(161, 36, 151);
+        
+        text-shadow: rgb(210, 30, 210);
+        font-style: italic;
+        font-size:2vw;
+    
+  }
+  #dd{
+      padding: 10px;
+      margin: 15px;
+      color: black;
+  }
+  .button{
+    display: block;
+    
+    width: 20%;
+    padding: 50px;
+
+  }
+  #SignIn,#SignUp{
+    width: 140px;
+    height: 40px;
+    display: inline-block;
+    font-weight: 400;
+    font-size: 13px;
+    padding: 10px;
+    border: none;
+    cursor: pointer; 
+  }
+  #SignIn {
+    background: #f74b9b;
+    color: rgb(248, 244, 244);
+    margin-right: 8px; }
+    #SignIn:hover {
+      background:rgb(161, 36, 151);
+      color: #fff; }
+  
+  #SignUp {
+    background: #f74b9b;
+    color: #fff; }
+    #SignUp:hover {
+      background-color:rgb(161, 36, 151); }
+#b{
+    margin-top: 175px;
+    color: rgb(241, 217, 241);
+}

@@ -1,0 +1,181 @@
+{% extends 'shop/basic.html' %}
+{% load static %}
+{% block title %}Shoppers Stop{% endblock %}
+
+
+{% block body %}
+<style>
+  .carousel-indicators .active {
+    background-color: blue;
+  }
+
+  body .carousel-indicator li {
+    background-color: blue;
+  }
+
+  body .carousel-indicators {
+    bottom: 0;
+  }
+
+  body .carousel-control-prev-icon,
+  body .carousel-control-next-icon {
+    background-color: blue;
+  }
+
+  .carousel-control-next {
+    right: -50px;
+  }
+
+  .carousel-control-prev {
+    left: -50px;
+  }
+
+  body .no-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+</style>
+<section class="header">
+  <div class="side-menu" id="side-menu">
+    <ul>
+      {% for product, slide, range in allprods %}
+      <a href="category{{product.0.id}}">
+        <li>{{product.0.category}}<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+            <path
+              d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+          </svg>
+      </a>
+      <ul>
+        {% for prod in product %}
+        <li>{{prod.sub_category}}</li>
+        {% endfor %}
+      </ul>
+      </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+  <section class="featured-categories">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <img src="{% static 'shop/img/img5.jpg' %}">
+        </div>
+        <div class="col-md-4">
+          <img src="{% static 'shop/img/img6.jpg' %}">
+        </div>
+        <div class="col-md-4">
+          <img src="{% static 'shop/img/img7.jpg' %}">
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="on-sale">
+    <div class="container">
+      <div class="title-box">
+        <h2>ON SALE</h2>
+      </div>
+
+      <div class="container">
+        {% for product,nslides, range in allprods %}
+        <h1>{{product.0.category}}</h1>
+        <div class="row">
+          <div id="demo{{forloop.counter}}" class="col carousel slide my-3" data-ride="carousel">
+            <ul class="carousel-indicators">
+              <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+              {% for i in range %}
+              <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}"></li>
+              {% endfor %}
+            </ul>
+            <div class="container carousel-inner no-padding">
+              <div class="carousel-item active">
+                {% for i in product %}
+                {% if forloop.first or forloop.counter|divisibleby:5 %}
+                <div class="row">
+                  {% endif %}
+                  <div class="col-md-3">
+                    <div class="shop-item">
+                      <a href="/shop/prodview{{i.id}}" target="_blank">
+                        <img class="shop-item-image" src="/media/{{i.image}}">
+                      </a>
+                      <div class="shop-item-details">
+                        <span class="shop-item-title">{{i.product_name}}</span>
+                        <br>
+                        <span class="shop-item">{{i.desc|slice:"0:50"}}..</span>
+                        <br>
+                        <span class="shop-item-price"><b>price - </b>₹{{i.price}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+                </div>
+              </div>
+              <div class="carousel-item">
+                {% endif %}
+
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+
+          <button class="carousel-control-prev" href="#demo{{forloop.counter}}" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          </button>
+          <button class="carousel-control-next" href="#demo{{forloop.counter}}" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+        {% endfor %}
+      </div>
+  </section>
+  <br>
+  <hr>
+  <br>
+  <section class="website-featured">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 featured-box">
+          <img src="{% static 'shop/img/imgp1.png' %}">
+          <div class="featured-text">
+            <p><b>100% Original Items</b> are available in our website</p>
+          </div>
+        </div>
+        <div class="col-md-3 featured-box">
+          <img src="{% static 'shop/img/imgp2.png' %}">
+          <div class="featured-text">
+            <p><b>Return Within 3 days</b> of reciving your order</p>
+          </div>
+        </div>
+        <div class="col-md-3 featured-box">
+          <img src="{% static 'shop/img/imgp3.png' %}">
+          <div class="featured-text">
+            <p><b>Get Free Delivery</b> order on more than 500 rupees</p>
+          </div>
+        </div>
+        <div class="col-md-3 featured-box">
+          <img src="{% static 'shop/img/imgp4.png' %}">
+          <div class="featured-text">
+            <p><b>Online Payment </b> options (card,net banking,UPI)</p>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  {% endblock %}
+
+  {% block js %}
+  <script>
+    function openmenu() {
+      document.getElementById("side-menu").style.display = "block";
+      document.getElementById("menu-btn").style.display = "none";
+      document.getElementById("close-btn").style.display = "block";
+    }
+    function closemenu() {
+      document.getElementById("side-menu").style.display = "none";
+      document.getElementById("menu-btn").style.display = "block";
+      document.getElementById("close-btn").style.display = "none";
+    }
+  </script>
+  {% endblock %}
