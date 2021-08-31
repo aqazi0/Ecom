@@ -591,5 +591,9 @@ td img{
         color: white !important;
         background-color: orange !important;
     }
+   .shop-item
+   {
+       margin-top: 40px;
+   }
    
   

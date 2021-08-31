@@ -4,8 +4,13 @@
 <div class="container my-4">
 
 {% for product, nitem in prods %}
+<div class="container">
 <div class="row">
-<h1>{{product.0.sub_category}}</h1>
+  <div class="title-box my-4 container">
+    
+<h2>{{product.0.sub_category}}</h2>
+  </div>
+
 {% for prod in product %}
     <div class="col-md-3">
       <div class="shop-item">
@@ -18,9 +23,13 @@
             <button class="btn btn-primary shop-item-button"type="button">ADD TO CART</button>
         </div>
     </div>
-    </div>
-  {% endfor %}
+    
   </div>
   {% endfor %}
+
+  </div>
+</div>
+  {% endfor %}
+  
 </div>
 {% endblock %}
