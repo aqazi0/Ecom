@@ -6,7 +6,7 @@
 {% block body %}
 <style>
   .carousel-indicators .active {
-    background-color: blue;
+    background-color: grey;
   }
 
   body .carousel-indicator li {
@@ -19,22 +19,162 @@
 
   body .carousel-control-prev-icon,
   body .carousel-control-next-icon {
-    background-color: blue;
+    background-color:grey;
+
   }
 
   .carousel-control-next {
-    right: -50px;
+   right: -50px;
   }
 
   .carousel-control-prev {
     left: -50px;
+   
   }
 
   body .no-padding {
     padding-left: 0;
     padding-right: 0;
   }
+  
+  .container h1
+   {
+       
+       text-align: center;
+       margin-top: 20px;
+   }
+   .card-body p
+   {
+      
+       color:black;
+       text-align: center;
+   }
+   .card img{
+     transition: 1s;
+     width: 140px;
+     height: 90px;
+   }
+   .card img:hover
+   {
+     transform: scale(1.1);
+   }
+.card-text
+{
+  font-size: 14px;
+}
+.nav-item
+{
+  border:green;
+}
 </style>
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+           </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">
+                 </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><div class="card" style="width: 9rem;">
+                  <img src="{% static 'shop/img/staplesss.jpg' %}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-text">Grocery&staples</p>
+                  </div>
+                </div></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <div class="card" style="width: 9rem;">
+                  <img src="{% static 'shop/img/electronic_6651975_835x547-m.jpg' %}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-text">Electronic</p>
+                  </div>
+                </div></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <div class="card" style="width: 9rem;">
+                  <img src="{% static 'shop/img/images.jpg' %}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-text">Personal Care</p>
+                  </div>
+                </div></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <div class="card" style="width: 9rem;">
+                  <img src="{% static 'shop/img/122.jpg' %}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-text">Sports</p>
+                  </div>
+                </div></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <div class="card" style="width: 9rem;">
+                  <img src="{% static 'shop/img/155.jpg' %}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-text">Fashion</p>
+                  </div>
+                </div></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <div class="card" style="width: 9rem;">
+                  <img src="{% static 'shop/img/img7.jpg' %}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-text">Grocery</p>
+                  </div>
+                </div></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <div class="card" style="width: 9rem;">
+                  <img src="{% static 'shop/img/img7.jpg' %}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-text">Grocery</p>
+                  </div>
+                </div></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <div class="card" style="width: 9rem;">
+                  <img src="{% static 'shop/img/img7.jpg' %}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-text">Grocery</p>
+                  </div>
+                </div></a>
+              </li>
+             
+             
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+   
+    
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+  
+
 <section class="header">
   <div class="side-menu" id="side-menu">
     <ul>
@@ -91,7 +231,7 @@
             <div class="container carousel-inner no-padding">
               <div class="carousel-item active">
                 {% for i in product %}
-                {% if forloop.first or forloop.counter|divisibleby:5 %}
+                {% if forloop.first or  forloop.counter|divisibleby:5 %}
                 <div class="row">
                   {% endif %}
                   <div class="col-md-3">
@@ -102,9 +242,9 @@
                       <div class="shop-item-details">
                         <span class="shop-item-title">{{i.product_name}}</span>
                         <br>
-                        <span class="shop-item">{{i.desc|slice:"0:50"}}..</span>
-                        <br>
                         <span class="shop-item-price"><b>price - </b>₹{{i.price}}</span>
+                        <br>
+                        <button class="btn btn-primary shop-item-button"type="button">ADD TO CART</button>
                       </div>
                     </div>
                   </div>
