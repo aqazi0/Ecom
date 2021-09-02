@@ -1,6 +1,7 @@
-if(localStorage.getItem('cart')=='null')
+if(localStorage.getItem('cart')==null)
 {
     var len=0;
+    localStorage.setItem('cart','{}')
 }
 else{
     var cart=JSON.parse(localStorage.getItem('cart'));

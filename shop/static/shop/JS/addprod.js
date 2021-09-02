@@ -1,8 +1,8 @@
-if(localStorage.getItem('cart')=='null'){
-    var cart={}
+if(localStorage.getItem('cart')==null){
+    localStorage.setItem('cart','{}')
 }
 else{
-    cart=JSON.parse(localStorage.getItem('cart'))
+    var cart=JSON.parse(localStorage.getItem('cart'))
 }
 
 var atc=document.getElementsByClassName('prod')[0];

@@ -2,13 +2,14 @@ from typing import ItemsView
 from django import http
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import authenticate, login as userlogin, logout as userlogout
-from .models import Product
+from .models import Product, categorie
 from math import ceil
 from django.contrib.auth.models import User
 # Create your views here.
 
 
 def index(request):
+    totalcat=categorie.objects.all()
     allprods=[]
     categories=Product.objects.values('category')
     catlist={items['category'] for items in categories}
@@ -17,7 +18,7 @@ def index(request):
         n=len(cats)
         nslides=n//4+ceil(n/4-(n//4))
         allprods.append([cats, nslides, range(1,nslides)])
-    params={'allprods':allprods}    
+    params={'allprods':allprods, 'categories':totalcat, "catrange":range(1,1)}    
     return render(request, 'shop/home.html',params)
 
 
@@ -45,10 +46,12 @@ def prodview(request, myid):
 
 
 def catview(request, catid):
+    category=categorie.objects.all()
+    # print()
     sub_cat={''}
     allprods=[]
-    prod=Product.objects.filter(id=catid)
-    items=Product.objects.filter(category=prod[0].category)
+    items=Product.objects.filter(category=category[catid-1].category)
+    # items=Product.objects.filter(category=prod[0].category)
     for item in items:
         sub_cat.add(item.sub_category)
     sub_cat.remove('')
