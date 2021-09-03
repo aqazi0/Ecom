@@ -4,7 +4,7 @@ from django.db import models
 
 class categorie(models.Model):
     category=models.CharField(default='', max_length=30)
-    image=models.ImageField()
+    image=models.ImageField(upload_to="shop/images",default="")
 
     def __str__(self):
         return self.category
@@ -23,16 +23,3 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
-
-
-
-
-# class signup(models.Model):
-#     userid=models.AutoField(primary_key=True)
-#     username=models.CharField(max_length=15, default='',unique=True)
-#     email=models.CharField(max_length=30, default='', unique=True)
-#     pass1=models.CharField(max_length=20,default='')
-#     pass2=models.CharField(max_length=20,default='')
-
-#     def __str__(self):
-#         return self.username

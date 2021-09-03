@@ -5,6 +5,10 @@ if(localStorage.getItem('cart')==null)
 }
 else{
     var cart=JSON.parse(localStorage.getItem('cart'));
-    var len=Object.keys(cart).length;
+    function cartlen(){
+        var cart=JSON.parse(localStorage.getItem('cart'));
+        var len=Object.keys(cart).length;
+        document.getElementById('lencart').innerText=len;
+    }
+    cartlen()
 }
-document.getElementById('lencart').innerText=len;
