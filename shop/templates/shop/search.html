@@ -1,5 +1,106 @@
 {% extends 'shop/basic.html' %}
 {% block title %} About {% endblock %}
 {% block body %}
-<h1>We are at Search Page</h1>
+<style>
+    .carousel-indicators .active {
+      background-color: grey;
+    }
+  
+    body .carousel-indicator li {
+      background-color: blue;
+    }
+  
+    body .carousel-indicators {
+      bottom: 0;
+    }
+  
+    body .carousel-control-prev-icon,
+    body .carousel-control-next-icon {
+      background-color:grey;
+    }
+  
+    .carousel-control-next {
+     right: -50px;
+    }
+  
+    .carousel-control-prev {
+      left: -50px;
+     
+    }
+  
+    body .no-padding {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    
+    .container h1
+     {
+         
+         text-align: center;
+         margin-top: 20px;
+     }
+     .card-body p
+     {
+        
+         color:black;
+         text-align: center;
+     }
+     .card img{
+       transition: 1s;
+       width: 140px;
+       height: 90px;
+     }
+     .card img:hover
+     {
+       transform: scale(1.1);
+     }
+  .card-text
+  {
+    font-size: 14px;
+  }
+  .nav-item
+  {
+    border:green;
+  }
+  </style>
+<div class="container">
+<h1>Search Results:</h1>
+<br>
+<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="row">
+            {% for i in allprods %}
+              <div class="col-md-3">
+                <div class="shop-item">
+                  <a href="/shop/prodview{{i.id}}" target="_blank">
+                    <img class="shop-item-image" src="/media/{{i.image}}">
+                  </a>
+                  <div class="shop-item-details">
+                    <span class="shop-item-title">{{i.product_name}}</span>
+                    <br>
+                    <span class="shop-item-price"><b>price - </b>₹{{i.price}}</span>
+                    <br>
+                    <button id="pr{{p.id}}" class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                  </div>
+                </div>
+              </div>
+              {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row">
+            {% endif %}
+          {% endfor %}
+      </div>
+    </div>
+    <button class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>
+</div>
 {% endblock %}

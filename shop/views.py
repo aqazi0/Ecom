@@ -5,7 +5,9 @@ from django.contrib.auth import authenticate, login as userlogin, logout as user
 from .models import Product, categorie
 from math import ceil
 from django.contrib.auth.models import User
+from itertools import chain
 # Create your views here.
+
 
 
 def index(request):
@@ -29,7 +31,6 @@ def about(request):
 
 
 
-
 def contact(request):
     return render(request, 'shop/contact.html')
 
@@ -47,11 +48,10 @@ def prodview(request, myid):
 
 def catview(request, catid):
     category=categorie.objects.all()
-    # print()
     sub_cat={''}
     allprods=[]
-    items=Product.objects.filter(category=category[catid-1].category)
-    # items=Product.objects.filter(category=prod[0].category)
+    cat=categorie.objects.filter(id=catid)[0].category
+    items=Product.objects.filter(category=cat)
     for item in items:
         sub_cat.add(item.sub_category)
     sub_cat.remove('')
@@ -69,7 +69,12 @@ def checkout(request):
     return render(request, 'shop/checkout.html', params)
 
 def search(request):
-    return render(request, 'shop/search.html')
+    query=request.GET['query']
+    prods=Product.objects.filter(product_name__contains=query)
+    # prods=chain(name, desc, cat, sub)
+    params={'allprods':prods}
+    print(prods)
+    return render(request, 'shop/search.html', params)
 
 
 def cart(request):
