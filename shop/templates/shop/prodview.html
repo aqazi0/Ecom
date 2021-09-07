@@ -55,9 +55,14 @@
           <p><b>Availability:</b> in stock</p>
           <p><b>Condition</b> Fresh</p>
           <p><b>Brand</b> {{prod.0.sub_category}}</p>
+          <form action="#" method='POST'>{% csrf_token %}
           <label>Quantity: </label>
           <input type="text" value="1">
-          <a href="/shop/cart"><button type="button" id="pr{{prod.0.id}}" class="btn btn-primary prod"> Add To Cart</button></a>
+          {% if user.is_authenticated %}
+          <input type='hidden' id='cartdata' name='cartjson' value='{{cart}}'>
+          {% endif %}
+          <button type="submit" id="pr{{prod.0.id}}" class="btn btn-primary prod"> Add To Cart</button>
+        </form>
         </div>
       </div>
     </div>

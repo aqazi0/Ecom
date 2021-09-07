@@ -15,13 +15,16 @@ if(cart[atc.id]!=undefined)
 
 $('.prod').click(function(){
     var myid=this.id.toString();
-    if(cart[myid]==undefined)
+    if(cart[myid]==undefined){
         qty=1;
-    var image=document.getElementById('pic').getAttribute('src')
-    var name=document.getElementById('name').innerText
-    var price=document.getElementById('rate').innerText.slice(1,)
-    cart[myid]=[qty,image,name,price]
-    this.innerHTML="Go To Cart";
-    this.class="btn btn-primary";
-    localStorage.setItem('cart',JSON.stringify(cart));
+        var image=document.getElementById('pic').getAttribute('src');
+        var name=document.getElementById('name').innerText;
+        var price=document.getElementById('rate').innerText.slice(1,);
+        cart[myid]=[qty,image,name,price];
+        this.innerHTML="Go To Cart";
+        this.class="btn btn-primary";
+        document.getElementById('cartdata').value=JSON.stringify(cart);
+        console.log(document.getElementById('cartdata').value)
+        localStorage.setItem('cart',JSON.stringify(cart));
+    }
 })

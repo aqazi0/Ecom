@@ -213,8 +213,11 @@
         </div>
       </div>
   </section>
-
+  {% if user.is_authenticated %}
+  <input type='hidden' id='cartdata' value='{{cart}}'>
+  {% else %}
+  <input type='hidden' id='cartdata' value='{}'>
+  {% endif %}
   {% endblock %}
   {% block js %}
-  <script src="{% static 'shop/JS/addprod.js'%}"></script>
   {% endblock %}

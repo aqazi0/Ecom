@@ -52,7 +52,14 @@ else{
         updateCartTotal(cart)
     }
     
+    function addtoview(){
+        var cart=localStorage.getItem('cart')
+        document.getElementById('cartjson').value=cart
+    }
+
+
     showcart(cart);
     updateCartTotal(cart);
+    addtoview();
 
 }

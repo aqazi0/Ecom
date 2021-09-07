@@ -2,13 +2,15 @@ from typing import ItemsView
 from django import http
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import authenticate, login as userlogin, logout as userlogout
-from .models import Product, categorie
+from .models import Product, categorie, address, UserProfile
 from math import ceil
 from django.contrib.auth.models import User
 from itertools import chain
 # Create your views here.
 
-
+def getcart():
+    data=UserProfile.objects.values('cartjson')
+    return data[0]
 
 def index(request):
     totalcat=categorie.objects.all()
@@ -20,7 +22,9 @@ def index(request):
         n=len(cats)
         nslides=n//4+ceil(n/4-(n//4))
         allprods.append([cats, nslides, range(1,nslides)])
-    params={'allprods':allprods, 'categories':totalcat, "catrange":range(1,1)}    
+    data=getcart()
+    data=data['cartjson']
+    params={'allprods':allprods, 'categories':totalcat, "catrange":range(1,1), 'cart':data}    
     return render(request, 'shop/home.html',params)
 
 
@@ -66,6 +70,20 @@ def catview(request, catid):
 def checkout(request):
     product=Product.objects.all()
     params={'product':product}
+    if request.method=='POST':
+        cart=request.POST['cartjson']
+        name=request.POST['fullname']
+        mail=request.POST['email']
+        tel=request.POST['phone']
+        add=request.POST['add']
+        city=request.POST['city']
+        state=request.POST['state']
+        zip=request.POST['zip']
+        print(cart, type(cart))
+        addr=address(user=request.user, name=name, email=mail, phone=tel, add=add, city=city, state=state, pin=zip)
+        addr.save()
+        Userdetail=UserProfile(user=request.user,cartjson=cart, address=addr)
+        Userdetail.save()
     return render(request, 'shop/checkout.html', params)
 
 
