@@ -68,13 +68,6 @@ def checkout(request):
     params={'product':product}
     return render(request, 'shop/checkout.html', params)
 
-def search(request):
-    query=request.GET['query']
-    prods=Product.objects.filter(product_name__contains=query)
-    # prods=chain(name, desc, cat, sub)
-    params={'allprods':prods}
-    print(prods)
-    return render(request, 'shop/search.html', params)
 
 
 def cart(request):
@@ -111,3 +104,17 @@ def hanlogin(request):
 def logout(request):
     userlogout(request)
     return redirect('index')
+
+
+def search(request):
+    query=request.GET['query']
+    if(len(query)==0 or len(query) > 80):
+        prods=Product.objects.none()
+    else:
+        name=Product.objects.filter(product_name__contains=query)
+        cat=Product.objects.filter(category__contains=query)
+        subcat=Product.objects.filter(sub_category__contains=query)
+        desc=Product.objects.filter(desc__contains=query)
+        prods=((name.union(cat)).union(subcat)).union(desc)
+    params={'allprods':prods, 'query':query}
+    return render(request, 'shop/search.html', params)

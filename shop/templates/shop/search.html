@@ -1,5 +1,5 @@
 {% extends 'shop/basic.html' %}
-{% block title %} About {% endblock %}
+{% block title %} search:{{query}} {% endblock %}
 {% block body %}
 <style>
     .carousel-indicators .active {
@@ -64,6 +64,22 @@
   }
   </style>
 <div class="container">
+{% if allprods|length < 1 %}
+<h6>No results containing all your search terms were found.</h6>
+
+<h6>Your query - <b>{{query}}</b> - did not match any documents.</h6>
+
+Suggestions:
+<ul>
+<li>
+Make sure that all words are spelled correctly.
+</li>
+Try different keywords.
+<li>
+Try more general keywords.
+</li>
+</ul>
+{% else %}
 <h1>Search Results:</h1>
 <br>
 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
@@ -102,5 +118,6 @@
     </button>
   </div>
 </div>
+{% endif %}
 </div>
 {% endblock %}
