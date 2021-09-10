@@ -39,9 +39,7 @@
                   d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z" />
               </svg>Cart( <span id='lencart'></span> )</a></li>
               {% if user.is_authenticated %}
-              <li> <a href="/shop/logout">{{user.first_name}}</a> <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="visually-hidden">Toggle Dropdown</span>
-              </button>  <ul class="dropdown-menu-ulo"></ul></li>
+              <li> <a href="/shop/logout">{{user.username}}</a></li>
               {% else %}
               <li> <a href="/shop/login">Login</a></li>
               {% endif %}
@@ -98,6 +96,11 @@
             </svg> by<b> Umang Sahgal and Abdullah Qazi</b></p>
           </div>
         </section>
+        {% if user.is_authenticated %}
+        <input type='hidden' id='cartdata' flag='0' value='{{cart}}'>
+        {% else %}
+        <input type='hidden' id='cartdata' flag='1' value='{}'>
+        {% endif %}
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>

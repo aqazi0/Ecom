@@ -55,7 +55,7 @@
           <p><b>Availability:</b> in stock</p>
           <p><b>Condition</b> Fresh</p>
           <p><b>Brand</b> {{prod.0.sub_category}}</p>
-          <form action="#" method='POST'>{% csrf_token %}
+          <form action="/shop/cart" method='POST'>{% csrf_token %}
           <label>Quantity: </label>
           <input type="text" value="1">
           {% if user.is_authenticated %}

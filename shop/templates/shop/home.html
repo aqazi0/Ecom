@@ -149,7 +149,7 @@
                 {% for i in product|slice:"0:" %}
                   <div class="col-md-3">
                     <div class="shop-item">
-                      <a href="/shop/prodview{{i.id}}" target="_blank">
+                      <a href="/shop/prodview{{i.id}}">
                         <img class="shop-item-image" src="/media/{{i.image}}">
                       </a>
                       <div class="shop-item-details">
@@ -157,7 +157,9 @@
                         <br>
                         <span class="shop-item-price"><b>price - </b>₹{{i.price}}</span>
                         <br>
-                        <button id="pr{{i.id}}" class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                        <span class="shop-item-price"><b>desc - </b>{{i.desc|slice:"0:50"}}</span>
+                        <br>
+                        <!-- <button id="pr{{i.id}}" class="btn btn-primary shop-item-button" type="button">ADD TO CART</button> -->
                       </div>
                     </div>
                   </div>
@@ -178,6 +180,7 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
           </button>
         </div>
+        </div>  
         {% endfor %}
       </div>
   </section>
@@ -213,11 +216,6 @@
         </div>
       </div>
   </section>
-  {% if user.is_authenticated %}
-  <input type='hidden' id='cartdata' value='{{cart}}'>
-  {% else %}
-  <input type='hidden' id='cartdata' value='{}'>
-  {% endif %}
   {% endblock %}
   {% block js %}
   {% endblock %}

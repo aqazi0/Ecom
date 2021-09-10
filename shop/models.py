@@ -55,5 +55,5 @@ class order(models.Model):
 
 class UserProfile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
-    cartjson=models.CharField(default='', max_length=1000)
+    cartjson=models.CharField(default="{}", max_length=1000)
     address=models.OneToOneField(address, models.CASCADE)

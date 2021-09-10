@@ -1,6 +1,6 @@
 from typing import ItemsView
-from django import http
-from django.shortcuts import render, HttpResponse, redirect
+from django.http import request
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as userlogin, logout as userlogout
 from .models import Product, categorie, address, UserProfile
 from math import ceil
@@ -8,9 +8,6 @@ from django.contrib.auth.models import User
 from itertools import chain
 # Create your views here.
 
-def getcart():
-    data=UserProfile.objects.values('cartjson')
-    return data[0]
 
 def index(request):
     totalcat=categorie.objects.all()
@@ -22,36 +19,37 @@ def index(request):
         n=len(cats)
         nslides=n//4+ceil(n/4-(n//4))
         allprods.append([cats, nslides, range(1,nslides)])
-    data=getcart()
-    data=data['cartjson']
-    params={'allprods':allprods, 'categories':totalcat, "catrange":range(1,1), 'cart':data}    
+    if request.user.is_authenticated:
+        if len(UserProfile.objects.filter(user=request.user)) != 0:
+            cart=UserProfile.objects.filter(user=request.user)[0].cartjson
+        else:    
+            addr=address(user=request.user, name=request.user.first_name, email=request.user.email, phone='000000', add='', city='', state='', pin=123456)
+            addr.save()
+            userdata=UserProfile(user=request.user, cartjson='{}', address=addr)
+            userdata.save()
+            cart='{}'
+        params={'allprods':allprods, 'categories':totalcat, "catrange":range(1,1), 'cart':cart}
+    else:
+        params={'allprods':allprods, 'categories':totalcat, "catrange":range(1,1)}
     return render(request, 'shop/home.html',params)
 
-
-
-
-def about(request):
-    return render(request, 'shop/about.html')
-
-
-
-def contact(request):
-    return render(request, 'shop/contact.html')
-
-
-def track(request):
-    return render(request, 'shop/track.html')
 
 def prodview(request, myid):
     prod=Product.objects.filter(id=myid)
     cat=prod[0].category
     sim_items=Product.objects.filter(category=cat)
-    return render(request, 'shop/prodview.html', {'prod':prod, 'items':sim_items})
-
+    if request.user.is_authenticated:
+        if len(UserProfile.objects.filter(user=request.user)) != 0:
+            cart=UserProfile.objects.filter(user=request.user)[0].cartjson
+        else:
+            cart='{}'
+        params={'prod':prod, 'items':sim_items, 'cart':cart}
+    else:
+        params={'prod':prod, 'items':sim_items}
+    return render(request, 'shop/prodview.html', params)
 
 
 def catview(request, catid):
-    category=categorie.objects.all()
     sub_cat={''}
     allprods=[]
     cat=categorie.objects.filter(id=catid)[0].category
@@ -87,9 +85,17 @@ def checkout(request):
     return render(request, 'shop/checkout.html', params)
 
 
-
 def cart(request):
-    return render(request, 'shop/cart.html')
+    params={}
+    if request.user.is_authenticated:
+        cart=UserProfile.objects.filter(user=request.user)[0].cartjson
+        if request.method=='POST':
+            userdata=UserProfile.objects.get(user=request.user)
+            cart=request.POST['cartjson']
+            userdata.cartjson=cart
+            userdata.save()
+            params={'cart':cart}
+    return render(request, 'shop/cart.html',params)
 
 
 def login(request):
@@ -104,6 +110,8 @@ def login(request):
         newUser.first_name=fname
         newUser.last_name=lname
         newUser.save()
+    if request.user.is_authenticated:
+        return redirect('index')
     return render(request, 'shop/login.html')
 
 
@@ -136,3 +144,15 @@ def search(request):
         prods=((name.union(cat)).union(subcat)).union(desc)
     params={'allprods':prods, 'query':query}
     return render(request, 'shop/search.html', params)
+
+
+def about(request):
+    return render(request, 'shop/about.html')
+
+
+def contact(request):
+    return render(request, 'shop/contact.html')
+
+
+def track(request):
+    return render(request, 'shop/track.html')

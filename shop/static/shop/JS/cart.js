@@ -3,8 +3,9 @@ if(localStorage.getItem('cart')=='null'){
 }
 else{
     var cart=JSON.parse(localStorage.getItem('cart'));
-    var l=Object.keys(cart).length;
     function showcart(cart){
+        var cart1=document.getElementById('cartdata').value
+        var l=Object.keys(cart1).length;
         var cartRowContents ="";
         var cartItems = document.getElementsByClassName('cart-items')[0];
         for (const key in cart) {
@@ -18,7 +19,7 @@ else{
             <span class="cart-price cart-column">₹` + cart[key][3] + `</span>
             <div class="cart-quantity cart-column">
                 <input class="cart-quantity-input" type="number" min="1" value="`+ cart[key][0] +`">
-                <button id="del`+prodid+`" class="btn btn-danger" type="button">REMOVE</button>
+                <button type='submit' id="del`+prodid+`" class="btn btn-danger" type="button">REMOVE</button>
             </div>
             </div>`;
             cartItems.innerHTML = cartRowContents;
@@ -60,9 +61,11 @@ else{
     $('.cart-quantity-input').change(quantityChanged)
     
     $('.btn-danger').click(function(){
+        console.log(1)
         var k="pr"+this.id.toString().slice(3,);
         delete cart[k];
         localStorage.setItem('cart',JSON.stringify(cart));
+        document.getElementById('cartdata').value=JSON.stringify(cart);
         location.reload();
     });
 }
