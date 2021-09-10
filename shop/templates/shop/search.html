@@ -62,6 +62,18 @@
   {
     border:green;
   }
+  .carousel-inner
+{
+  margin-left: 55px;
+}
+.container hr
+{
+  margin-right: 200px;
+}
+.btn-abcd
+{
+  background-color: white;
+}
   </style>
 <div class="container">
 {% if allprods|length < 1 %}
@@ -85,24 +97,38 @@ Try more general keywords.
 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <div class="row">
+            
             {% for i in allprods %}
-              <div class="col-md-3">
+              <div class="container">
                 <div class="shop-item">
+                  <div class="row">
+                  <div class="col-md-4">
                   <a href="/shop/prodview{{i.id}}" target="_blank">
+                   
                     <img class="shop-item-image" src="/media/{{i.image}}">
                   </a>
+                </div>
+                <div class="col-md-4">
                   <div class="shop-item-details">
                     <span class="shop-item-title">{{i.product_name}}</span>
                     <br>
                     <span class="shop-item-price"><b>price - </b>₹{{i.price}}</span>
                     <br>
-                    <button id="pr{{p.id}}" class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    <span class="shop-item-disc">{{i.desc}}</span>
+                    <br>
+                    <button  class="btn btn-primary btn-abcd" type="button"> <a href="/shop/prodview{{i.id}}"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                      <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                      <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                    </svg></a></button>
                   </div>
+                  </div>
+                  
+                </div>
+                <hr>
                 </div>
               </div>
-              {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
-            </div>
+              {% if forloop.counter|divisibleby:100 and forloop.counter > 0 and not forloop.last %}
+           
           </div>
           <div class="carousel-item">
             <div class="row">
@@ -110,13 +136,9 @@ Try more general keywords.
           {% endfor %}
       </div>
     </div>
-    <button class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    </button>
-    <button class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    </button>
   </div>
+   
+  
 </div>
 {% endif %}
 </div>
