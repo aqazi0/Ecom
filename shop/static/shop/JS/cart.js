@@ -68,22 +68,17 @@ else{
         delete cart[k];
         localStorage.setItem('cart',JSON.stringify(cart));
         document.getElementById('cartdata').value=JSON.stringify(cart);
-        location.reload();
     });
 
-
-    
     $('.add').click(function(){
-        // console.log(1)
         var k="pr"+this.id.toString().slice(3,);
         cart[k][0]=parseInt(cart[k][0])
         cart[k][0]+=1;
         localStorage.setItem('cart',JSON.stringify(cart));
         document.getElementById('cartdata').value=JSON.stringify(cart);
-        location.reload();
     });
+
     $('.sub').click(function(){
-        // console.log(1)
         var k="pr"+this.id.toString().slice(3,);
         cart[k][0]=parseInt(cart[k][0])
         if(cart[k][0]!=1){
@@ -91,6 +86,5 @@ else{
         }
         localStorage.setItem('cart',JSON.stringify(cart));
         document.getElementById('cartdata').value=JSON.stringify(cart);
-        location.reload();
     });
 }

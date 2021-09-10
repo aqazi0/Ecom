@@ -11,8 +11,6 @@ if(cart[atc.id]!=undefined)
     atc.innerHTML="Go to Cart";
 }
 
-
-
 $('.prod').click(function(){
     var myid=this.id.toString();
     if(cart[myid]==undefined){

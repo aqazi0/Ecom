@@ -1,4 +1,5 @@
 from typing import ItemsView
+from django.core.checks import messages
 from django.http import request
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as userlogin, logout as userlogout
@@ -66,24 +67,33 @@ def catview(request, catid):
 
 
 def checkout(request):
-    product=Product.objects.all()
-    params={'product':product}
-    if request.method=='POST':
-        cart=request.POST['cartjson']
-        name=request.POST['fullname']
-        mail=request.POST['email']
-        tel=request.POST['phone']
-        add=request.POST['add']
-        city=request.POST['city']
-        state=request.POST['state']
-        zip=request.POST['zip']
-        print(cart, type(cart))
-        addr=address(user=request.user, name=name, email=mail, phone=tel, add=add, city=city, state=state, pin=zip)
-        addr.save()
-        Userdetail=UserProfile(user=request.user,cartjson=cart, address=addr)
-        Userdetail.save()
-    return render(request, 'shop/checkout.html', params)
-
+    if request.user.is_authenticated:
+        if len(UserProfile.objects.filter(user=request.user)) != 0:
+            if len(UserProfile.objects.filter(user=request.user)[0].cartjson) < 4:
+                # messages
+                return redirect('cart')
+        else:
+            # messages
+            return redirect('cart')
+        product=Product.objects.all()
+        params={'product':product}
+        if request.method=='POST':
+            cart=request.POST['cartjson']
+            name=request.POST['fullname']
+            mail=request.POST['email']
+            tel=request.POST['phone']
+            add=request.POST['add']
+            city=request.POST['city']
+            state=request.POST['state']
+            zip=request.POST['zip']
+            print(cart, type(cart))
+            addr=address(user=request.user, name=name, email=mail, phone=tel, add=add, city=city, state=state, pin=zip)
+            addr.save()
+            Userdetail=UserProfile(user=request.user,cartjson=cart, address=addr)
+            Userdetail.save()
+        return render(request, 'shop/checkout.html', params)
+    # messages
+    return redirect('login')
 
 def cart(request):
     params={}
@@ -99,6 +109,8 @@ def cart(request):
 
 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('index')
     if(request.method=='POST'):
         uname=request.POST['uname']
         fname=request.POST['fname']
@@ -106,12 +118,15 @@ def login(request):
         email=request.POST['email']
         pass1=request.POST['pass1']
         pass2=request.POST['pass2']
-        newUser=User.objects.create_user(uname, email, pass1)
-        newUser.first_name=fname
-        newUser.last_name=lname
-        newUser.save()
-    if request.user.is_authenticated:
-        return redirect('index')
+        if pass1 == pass2:
+            newUser=User.objects.create_user(uname, email, pass1)
+            newUser.first_name=fname
+            newUser.last_name=lname
+            newUser.save()
+            # messages
+        else:
+            # messages
+            pass
     return render(request, 'shop/login.html')
 
 

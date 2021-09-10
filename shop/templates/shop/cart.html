@@ -20,7 +20,7 @@ input::-webkit-inner-spin-button {
         <span class="cart-price cart-header cart-column">PRICE</span>
         <span class="cart-quantity cart-header cart-column">QUANTITY</span>
     </div>
-    <!-- <form action="/shop/cart" method='POST'>{% csrf_token %} -->
+    <form action="/shop/cart" method='POST'>{% csrf_token %}
     {% if user.is_authenticated %}
     <input type='hidden' id='cartdata' name='cartjson' value='{{cart}}'>
     {% endif %}
@@ -31,7 +31,7 @@ input::-webkit-inner-spin-button {
         <span class="cart-total-price">₹0</span>
     </div>
     </form>
-    <a href="/shop/checkout"><button type="button" class="btn btn-primary"> PURCHASE </button></a>
+    <a href="/shop/checkout"><button type="button" id='purchase' class="btn btn-primary"> PURCHASE </button></a>
 </section>
 {% endblock %}
 {% block js %}
