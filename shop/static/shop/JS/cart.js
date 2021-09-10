@@ -18,7 +18,10 @@ else{
             </div>
             <span class="cart-price cart-column">₹` + cart[key][3] + `</span>
             <div class="cart-quantity cart-column">
-                <input class="cart-quantity-input" type="number" min="1" value="`+ cart[key][0] +`">
+            <button type='submit' id="sub`+prodid+`" class="btn btn-primary sub" type="button">-</button>&nbsp &nbsp
+            <input id="val`+prodid+`" class="cart-quantity-input" type="number" value="`+ cart[key][0] +`">
+            <button type='submit' id="add`+prodid+`" class="btn btn-primary add" type="button">+</button>
+            &nbsp &nbsp &nbsp &nbsp &nbsp
                 <button type='submit' id="del`+prodid+`" class="btn btn-danger" type="button">REMOVE</button>
             </div>
             </div>`;
@@ -61,9 +64,31 @@ else{
     $('.cart-quantity-input').change(quantityChanged)
     
     $('.btn-danger').click(function(){
-        console.log(1)
         var k="pr"+this.id.toString().slice(3,);
         delete cart[k];
+        localStorage.setItem('cart',JSON.stringify(cart));
+        document.getElementById('cartdata').value=JSON.stringify(cart);
+        location.reload();
+    });
+
+
+    
+    $('.add').click(function(){
+        // console.log(1)
+        var k="pr"+this.id.toString().slice(3,);
+        cart[k][0]=parseInt(cart[k][0])
+        cart[k][0]+=1;
+        localStorage.setItem('cart',JSON.stringify(cart));
+        document.getElementById('cartdata').value=JSON.stringify(cart);
+        location.reload();
+    });
+    $('.sub').click(function(){
+        // console.log(1)
+        var k="pr"+this.id.toString().slice(3,);
+        cart[k][0]=parseInt(cart[k][0])
+        if(cart[k][0]!=1){
+            cart[k][0]-=1;
+        }
         localStorage.setItem('cart',JSON.stringify(cart));
         document.getElementById('cartdata').value=JSON.stringify(cart);
         location.reload();

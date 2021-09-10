@@ -18,5 +18,4 @@ function getcart(flag){
 }
 
 flag=document.getElementById('cartdata').getAttribute('flag')
-console.log(flag)
 getcart(flag)

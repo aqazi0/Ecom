@@ -2,6 +2,17 @@
 {% block title %}Cart{% endblock %}
 {% load static %}
 {% block body %}
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.add, .sub{
+    border-radius: 100%;
+    /* size: 20px; */
+}
+</style>
 <section class="container content-section">
     <h2 class="section-header">CART</h2>
     <div class="cart-row">
@@ -9,7 +20,7 @@
         <span class="cart-price cart-header cart-column">PRICE</span>
         <span class="cart-quantity cart-header cart-column">QUANTITY</span>
     </div>
-    <form action="/shop/cart" method='POST'>{% csrf_token %}
+    <!-- <form action="/shop/cart" method='POST'>{% csrf_token %} -->
     {% if user.is_authenticated %}
     <input type='hidden' id='cartdata' name='cartjson' value='{{cart}}'>
     {% endif %}
