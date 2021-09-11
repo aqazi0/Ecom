@@ -55,11 +55,11 @@ else{
     function addtoview(){
         var cart=localStorage.getItem('cart')
         document.getElementById('cartjson').value=cart
+        document.getElementById('total').value=(document.getElementsByClassName('cart-total-price')[0].innerText).slice(1,)
     }
 
 
     showcart(cart);
     updateCartTotal(cart);
     addtoview();
-
 }

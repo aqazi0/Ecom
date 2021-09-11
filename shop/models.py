@@ -37,18 +37,13 @@ class address(models.Model):
     state=models.CharField(default='', max_length=30)
     pin=models.IntegerField(default=0)
 
-    def __str__(self):
-        return self.name
-
 
 class order(models.Model):
     order_id=models.AutoField(primary_key=True)
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     orderjson=models.CharField(default='', max_length=1000)
+    total_amt=models.IntegerField(default=0)
     address=models.OneToOneField(address, models.CASCADE)
-
-    def __str__(self):
-        return self.order_id
 
 
 

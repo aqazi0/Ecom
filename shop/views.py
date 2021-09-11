@@ -1,9 +1,10 @@
 from typing import ItemsView
 from django.core.checks import messages
 from django.http import request
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as userlogin, logout as userlogout
-from .models import Product, categorie, address, UserProfile
+from .models import Product, categorie, address, UserProfile, order
 from math import ceil
 from django.contrib.auth.models import User
 from itertools import chain
@@ -24,7 +25,7 @@ def index(request):
         if len(UserProfile.objects.filter(user=request.user)) != 0:
             cart=UserProfile.objects.filter(user=request.user)[0].cartjson
         else:    
-            addr=address(user=request.user, name=request.user.first_name, email=request.user.email, phone='000000', add='', city='', state='', pin=123456)
+            addr=address(user=request.user)
             addr.save()
             userdata=UserProfile(user=request.user, cartjson='{}', address=addr)
             userdata.save()
@@ -77,20 +78,6 @@ def checkout(request):
             return redirect('cart')
         product=Product.objects.all()
         params={'product':product}
-        if request.method=='POST':
-            cart=request.POST['cartjson']
-            name=request.POST['fullname']
-            mail=request.POST['email']
-            tel=request.POST['phone']
-            add=request.POST['add']
-            city=request.POST['city']
-            state=request.POST['state']
-            zip=request.POST['zip']
-            print(cart, type(cart))
-            addr=address(user=request.user, name=name, email=mail, phone=tel, add=add, city=city, state=state, pin=zip)
-            addr.save()
-            Userdetail=UserProfile(user=request.user,cartjson=cart, address=addr)
-            Userdetail.save()
         return render(request, 'shop/checkout.html', params)
     # messages
     return redirect('login')
@@ -171,3 +158,27 @@ def contact(request):
 
 def track(request):
     return render(request, 'shop/track.html')
+
+def payment(request):
+    if request.method=='POST':
+            useradd=address.objects.get(user=request.user)
+            cart=request.POST['cartjson']
+            total=int(request.POST['total'])
+            name=request.POST['fullname']
+            mail=request.POST['email']
+            tel=request.POST['phone']
+            add=request.POST['add']
+            city=request.POST['city']
+            state=request.POST['state']
+            zip=request.POST['zip']
+            useradd.name=name
+            useradd.email=mail
+            useradd.phone=tel
+            useradd.add=add
+            useradd.city=city
+            useradd.state=state
+            useradd.pin=zip
+            useradd.save()
+            neworder=order(user=request.user, orderjson=cart,total_amt=total, address=useradd)
+            neworder.save() 
+    return HttpResponse('Payment Done')
